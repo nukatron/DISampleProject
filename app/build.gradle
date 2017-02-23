@@ -1,0 +1,77 @@
+apply plugin: 'com.android.application'
+apply plugin: 'kotlin-android'
+
+android {
+    def mApplicationId = "com.sample.di"
+    def mVersionMajor = "1"
+    def mVersionMinor = "0.0"
+    def mVersionCode = 1
+    def mVersionName = mVersionMajor + "." + mVersionMinor
+
+    compileSdkVersion 25
+    buildToolsVersion "25.0.2"
+    defaultConfig {
+        applicationId mApplicationId
+        minSdkVersion 15
+        targetSdkVersion 25
+        versionCode mVersionCode
+        versionName mVersionName
+        testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
+    }
+    buildTypes {
+        debug {
+            minifyEnabled false
+            applicationIdSuffix ".debug"
+        }
+        release {
+            minifyEnabled true
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+        }
+
+        //change final apk file name
+        applicationVariants.all { variant ->
+            variant.outputs.each { output ->
+                if (variant.buildType.name.equals("debug")) {
+                    output.outputFile = new File(output.outputFile.parent, "di-debug-" + variant.productFlavors[0].versionName+".apk");
+                } else if (variant.buildType.name.equals("release")) {
+                    output.outputFile = new File(output.outputFile.parent, "di-release-" + variant.productFlavors[0].versionName+".apk");
+                }
+            }
+        }
+    }
+    sourceSets {
+        main.java.srcDirs += 'src/main/kotlin'
+    }
+
+    // add flavors.
+    productFlavors {
+        mock {
+            applicationIdSuffix = ".mock"
+            versionName = mVersionName + "-mock"
+        }
+        prod {
+
+        }
+    }
+
+    // filter mockRelease out, so it will not appear in Build variants
+    android.variantFilter { variant ->
+        if(variant.buildType.name.equals('release')
+                && variant.getFlavors().get(0).name.equals('mock')) {
+            variant.setIgnore(true);
+        }
+    }
+}
+
+dependencies {
+    compile fileTree(dir: 'libs', include: ['*.jar'])
+    androidTestCompile('com.android.support.test.espresso:espresso-core:2.2.2', {
+        exclude group: 'com.android.support', module: 'support-annotations'
+    })
+    compile 'com.android.support:appcompat-v7:25.1.0'
+    testCompile 'junit:junit:4.12'
+    compile "org.jetbrains.kotlin:kotlin-stdlib:$kotlin_version"
+}
+repositories {
+    mavenCentral()
+}
