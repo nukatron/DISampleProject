@@ -8,10 +8,45 @@
     android:paddingLeft="@dimen/activity_horizontal_margin"
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
-    tools:context="com.sample.di.MainActivity">
+    tools:context="com.sample.di.groceries.GroceryActivity">
+
+
+
+    <LinearLayout
+        android:id="@+id/buttonLayout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:gravity="center">
+
+        <Button
+            android:id="@+id/addButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/label_add"/>
+
+        <Button
+            android:id="@+id/randomButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/label_random"/>
+
+        <Button
+            android:id="@+id/showAllButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/label_show"/>
+
+    </LinearLayout>
+
 
     <TextView
-        android:layout_width="wrap_content"
+        android:id="@+id/mainTextView"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Hello World!" />
+        android:layout_above="@+id/buttonLayout"
+        android:layout_alignParentTop="true"
+        android:text="Hello World!"
+        />
+
 </RelativeLayout>
