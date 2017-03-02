@@ -3,9 +3,9 @@ package com.sample.di.groceries
 import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
 import android.widget.Toast
+import com.sample.di.Injection
 import com.sample.di.R
 import com.sample.di.data.GroceryItem
-import com.sample.di.data.Injection
 import kotlinx.android.synthetic.main.activity_main.*
 
 class GroceryActivity : AppCompatActivity(), GroceryContact.View {
